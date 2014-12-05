@@ -39,5 +39,11 @@ an assembly code which puts the literal and its length into the appropriate merg
 
 Another issue with the macro is that in gcc the extended assembly cannot be used outside a function, so at the moment there is no way to define a static const literal. One possible solution here could be to introduce another macro to generate a C++11 lambda function definition and then call it in-place, but this is not implemented yet.
 
+Tested on Linux:
+
+```bash
+$ g++ --version
+g++ (Ubuntu 4.8.2-19ubuntu1) 4.8.2
+```
 
 **Licence: BSD**
