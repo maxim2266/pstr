@@ -52,8 +52,7 @@ void test_append()
 	pstr s(pstr_lit("xyz"));
 
 	s.append(pstr_lit(" abc").append(pstr_lit(" 123")));
-
-	ensure(s.compare(pstr_lit("xyz abc 123")) == 0);
+	ensure(s == pstr_lit("xyz abc 123"));
 }
 
 static
@@ -62,14 +61,12 @@ void test_simple_conversion()
 	pstr src(1234, 'x');
 
 	src.convert(toupper);
-
-	ensure(src.compare(pstr(1234, 'X')) == 0);
+	ensure(src == pstr(1234, 'X'));
 
 	pstr s2(src);	// make a copy to force new string allocation in convert()
 
 	s2.convert(tolower);
-
-	ensure(s2.compare(pstr(1234, 'x')) == 0);
+	ensure(s2 == pstr(1234, 'x'));
 }
 
 int main(int argc, char** argv)
