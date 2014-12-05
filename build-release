@@ -1,0 +1,5 @@
+g++ test.cpp pstr.cpp \
+-std=c++11 -Wall \
+-O2 -fomit-frame-pointer -fno-exceptions -fno-rtti -flto -march=native -ffunction-sections -fdata-sections -Wl,--gc-sections -Wl,--as-needed \
+-o pstr-release \
+-save-temps

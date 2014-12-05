@@ -1,0 +1,3 @@
+g++ -g test.cpp pstr.cpp -std=c++11 -Wall -o pstr-dbg
+
+
