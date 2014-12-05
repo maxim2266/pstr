@@ -4,9 +4,9 @@
 
 In the modern C++ STL implementations the class `std::string` does not deal quite accurately with constant strings.
 Each time someone writes
-
-`std::string s("xyz");`
-
+```C++
+std::string s("xyz");`
+```
 the constant string literal gets copied to a heap allocated memory. Some implementations can handle
 short strings without memory allocations, but still some unnecessary processing is involved, thus wasting
 memory and CPU cycles, also making a contribution to the global warming. :)
