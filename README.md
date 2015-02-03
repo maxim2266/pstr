@@ -45,5 +45,32 @@ Tested on Linux:
 $ g++ --version
 g++ (Ubuntu 4.8.2-19ubuntu1) 4.8.2
 ```
+The above compiler produces the following warning when compiling in release mode:
+```bash
+$ ./build-release
+pstr.o (symbol from plugin): warning: memset used with constant zero length parameter; this could be due to transposed parameters
+[Leaving LTRANS /tmp/ccyS6JS8.args]
+[Leaving LTRANS pstr-release.ltrans.out]
+[Leaving LTRANS /tmp/ccWJaH3r.args]
+[Leaving LTRANS pstr-release.ltrans0.o]
+```
+This appears to be due to a bug in gcc, see https://gcc.gnu.org/bugzilla/show_bug.cgi?id=51744
+
+####Examples:
+Constructing a sring from literal using "pstr_lit" macro:
+```C++
+pstr s(pstr_lit("xyz"));	// constructs a string from literal "xyz"
+
+s.append(pstr_lit(" abc").append(pstr_lit(" 123")));
+// now s == "xyz abc 123"
+```
+String concatenation:
+```C++
+pstr s(pstr_lit("xyz"));
+
+s.append(pstr(5, '-'));
+// now s == "xyz-----"
+```
+
 
 **Licence: BSD**

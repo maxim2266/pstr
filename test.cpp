@@ -56,6 +56,15 @@ void test_append()
 }
 
 static
+void test_append_2()
+{
+	pstr s(pstr_lit("xyz"));
+
+	s.append(pstr(5, '-'));
+	ensure(s == pstr_lit("xyz-----"));
+}
+
+static
 void test_simple_conversion()
 {
 	pstr src(1234, 'x');
@@ -73,6 +82,7 @@ int main(int argc, char** argv)
 {
 	test_lit();
 	test_append();
+	test_append_2();
 	test_simple_conversion();
 
 	puts("All passed.");
