@@ -25,6 +25,7 @@
 
 #include <cstring>
 #include <cstdint>
+#include <cstdio>	// EOF definition
 
 // helper macro
 #define CHAR_TO_INT(c)	((unsigned char)(c))
@@ -77,6 +78,23 @@ void replace_this(pstr& dest, real_pstr* src)
 	pstr tmp(&src->data);
 
 	dest.swap(tmp);
+}
+
+static
+void transform_and_copy(const pstr& src, char* dest, int (*f)(int))
+{
+	const char* s = src.cbegin();
+	const char* const end = src.cend();
+
+	while(s < end)
+	{
+		const int c = f(CHAR_TO_INT(*s++));
+
+		if(c == EOF)
+			break;
+
+		*dest++ = (char)c;
+	}
 }
 
 // string class implementation
@@ -167,22 +185,13 @@ pstr& pstr::convert(int (*f)(int))
 
 	const size_t n = size();
 
-	if(is_unique())
-	{	// can modify in place
-		char* const s = (char*)c_str();
-
-		for(size_t i = 0; i < n; ++i)
-			s[i] = f(CHAR_TO_INT(s[i]));
-	}
+	if(is_unique())	// can modify in place
+		transform_and_copy(*this, (char*)c_str(), f);
 	else
 	{
 		real_pstr* const p = alloc(n);
-		char* const dst = p->data.str;
-		const char* const src = c_str();
 
-		for(size_t i = 0; i < n; ++i)
-			dst[i] = f(CHAR_TO_INT(src[i]));
-
+		transform_and_copy(*this, p->data.str, f);
 		replace_this(*this, p);
 	}
 
